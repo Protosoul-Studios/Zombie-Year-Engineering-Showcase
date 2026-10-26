@@ -1,0 +1,6 @@
+# These standalone C# engineering models are the primary portfolio source.
+# Explicitly count their code in GitHub Linguist even under samples/.
+samples/independent-models/*.cs linguist-language=C# linguist-detectable -linguist-vendored -linguist-generated -linguist-documentation
+
+# Python is an auxiliary link and distribution validator, not showcased game code.
+scripts/validate_showcase.py -linguist-detectable

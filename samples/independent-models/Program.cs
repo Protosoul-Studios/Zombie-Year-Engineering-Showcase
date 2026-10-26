@@ -2,6 +2,13 @@
 using ZombieYear.Showcase.Models;
 int count=0;
 void Check(string label,bool ok){if(!ok)throw new Exception("FAILED: "+label);count++;Console.WriteLine($"PASS {count:00} {label}");}
+
+void Throws<T>(string label, Action action) where T : Exception
+{
+    try { action(); }
+    catch (Exception e) when (e is T) { Check(label, true); return; }
+    throw new Exception("Expected " + typeof(T).Name + ": " + label);
+}
 var e=new HuntEvidence(true,true,true,false,false);
 var h=new HunterStatePolicy();
 Check("hunter begins roaming",h.Mode==HuntMode.Roam);
@@ -52,4 +59,32 @@ player.Toggle(true);Check("crouch blocks sprint speed",player.Speed(3,6,1.5,true
 Check("forward relative movement",SurvivorControlPolicy.Move(0,1,0)==new PlanarMove(0,1));
 Check("diagonal input normalized",SurvivorControlPolicy.Move(1,1,0).X<1);
 Check("pitch limit",SurvivorControlPolicy.Pitch(95,-35,70)==70);
+
+Throws<ArgumentOutOfRangeException>("invalid view range rejected",
+    () => VisionMemory.CanSee(a,f,new(0,5),0,90,true));
+Throws<ArgumentOutOfRangeException>("nonfinite view point rejected",
+    () => VisionMemory.CanSee(a,f,new(double.NaN,1),10,90,true));
+Throws<ArgumentOutOfRangeException>("backdated observation rejected",
+    () => { var m=new VisionMemory();m.Observe(a,10);m.Observe(a,9); });
+Throws<ArgumentOutOfRangeException>("invalid memory lifetime rejected",
+    () => v.LastKnown(10,-1));
+Throws<ArgumentOutOfRangeException>("invalid sound radius rejected",
+    () => SoundAttention.Score(new SoundEvent(a,0,1,0,5),a,1));
+Throws<ArgumentOutOfRangeException>("nonfinite sound intensity rejected",
+    () => SoundAttention.Score(new SoundEvent(a,10,double.NaN,0,5),a,1));
+Check("future sound event does not count",
+    SoundAttention.Score(new SoundEvent(a,10,1,5,2),a,3)==0);
+Check("zero evidence never redirects",
+    !attention.Consider(new(9,9),0,5)&&attention.Destination==null);
+Throws<ArgumentOutOfRangeException>("backdated attention rejected",
+    () => { var focus=new SoundAttention();focus.Consider(a,.5,10);focus.Consider(new(5,5),.9,9); });
+Throws<ArgumentOutOfRangeException>("negative travel rejected",
+    () => new FootstepComposer().Advance(-1,Pace.Walk,Stance.Stand,factors));
+Throws<ArgumentOutOfRangeException>("invalid surface rejected",
+    () => new FootstepComposer().Advance(2,Pace.Walk,Stance.Stand,new(-1,1)));
+Throws<ArgumentOutOfRangeException>("nonfinite movement speed rejected",
+    () => player.Speed(double.NaN,6,1.5,false));
+Throws<ArgumentOutOfRangeException>("invalid pitch range rejected",
+    () => SurvivorControlPolicy.Pitch(0,90,-90));
+
 Console.WriteLine($"ALL {count} INDEPENDENT MODEL CHECKS PASSED");
