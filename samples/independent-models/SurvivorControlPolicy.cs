@@ -1,5 +1,6 @@
 // Copyright © 2026 Protosoul Studios. All rights reserved.
-// Independent movement and stance policy; no CharacterController or Cinemachine code.
+// Independent controls policy; no Unity CharacterController or Cinemachine code.
+
 namespace ZombieYear.Showcase.Models;
 
 public readonly record struct PlanarMove(double X, double Z);
@@ -8,40 +9,60 @@ public sealed class SurvivorControlPolicy
 {
     public bool Crouching { get; private set; }
 
-    public bool Toggle(bool canStand)
+    public bool Toggle(bool hasStandingClearance)
     {
-        if (!Crouching) Crouching = true;
-        else if (canStand) Crouching = false;
+        if (!Crouching)
+            Crouching = true;
+        else if (hasStandingClearance)
+            Crouching = false;
+
         return Crouching;
     }
 
-    public double Speed(double walk, double sprint, double crouch, bool sprintHeld)
+    public double Speed(
+        double walkSpeed,
+        double sprintSpeed,
+        double crouchSpeed,
+        bool sprintHeld)
     {
-        if (!double.IsFinite(walk) || walk < 0 ||
-            !double.IsFinite(sprint) || sprint < 0 ||
-            !double.IsFinite(crouch) || crouch < 0)
-            throw new ArgumentOutOfRangeException(nameof(walk));
-        return Crouching ? crouch : sprintHeld ? sprint : walk;
+        if (!double.IsFinite(walkSpeed) || walkSpeed < 0 ||
+            !double.IsFinite(sprintSpeed) || sprintSpeed < 0 ||
+            !double.IsFinite(crouchSpeed) || crouchSpeed < 0)
+            throw new ArgumentOutOfRangeException(nameof(walkSpeed));
+
+        return Crouching
+            ? crouchSpeed
+            : sprintHeld ? sprintSpeed : walkSpeed;
     }
 
-    public static PlanarMove Move(double right, double forward, double cameraYaw)
+    public static PlanarMove Move(
+        double right,
+        double forward,
+        double cameraYawDegrees)
     {
         if (!double.IsFinite(right) || !double.IsFinite(forward) ||
-            !double.IsFinite(cameraYaw))
+            !double.IsFinite(cameraYawDegrees))
             throw new ArgumentOutOfRangeException(nameof(right));
-        double size = Math.Sqrt(right * right + forward * forward);
-        if (size > 1) { right /= size; forward /= size; }
-        double angle = cameraYaw * Math.PI / 180;
+
+        double magnitude = Math.Sqrt(right * right + forward * forward);
+        if (magnitude > 1)
+        {
+            right /= magnitude;
+            forward /= magnitude;
+        }
+
+        double yaw = cameraYawDegrees * Math.PI / 180;
         return new PlanarMove(
-            Math.Cos(angle) * right + Math.Sin(angle) * forward,
-            -Math.Sin(angle) * right + Math.Cos(angle) * forward);
+            Math.Cos(yaw) * right + Math.Sin(yaw) * forward,
+            -Math.Sin(yaw) * right + Math.Cos(yaw) * forward);
     }
 
-    public static double Pitch(double value, double min, double max)
+    public static double Pitch(double value, double minimum, double maximum)
     {
-        if (!double.IsFinite(value) || !double.IsFinite(min) ||
-            !double.IsFinite(max) || min > max)
+        if (!double.IsFinite(value) || !double.IsFinite(minimum) ||
+            !double.IsFinite(maximum) || minimum > maximum)
             throw new ArgumentOutOfRangeException(nameof(value));
-        return Math.Clamp(value, min, max);
+
+        return Math.Clamp(value, minimum, maximum);
     }
 }
