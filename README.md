@@ -30,7 +30,7 @@ The models require **.NET 10**, with **no Unity or third-party packages**.
 dotnet run --project samples/independent-models/IndependentModels.csproj --configuration Release
 ```
 
-The [model guide](samples/independent-models/README.md) describes the examples and the automated checks. See the [verification matrix](docs/verification-matrix.md) before interpreting any result as production game evidence.
+The [model guide](samples/independent-models/README.md) describes the examples. **All 52 independent C# checks passed** in [GitHub Actions run #40255161464](https://github.com/Protosoul-Studios/Zombie-Year-Engineering-Showcase/actions/runs/40255161464). See the [verification matrix](docs/verification-matrix.md) before interpreting any result as production game evidence.
 
 ## Unity implementation context
 
