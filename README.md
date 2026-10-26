@@ -38,9 +38,9 @@ The inspected game prototype uses **Unity 6000.2.14f1**, URP, Unity AI Navigatio
 
 **Source inspected ≠ gameplay verified.** Combat/kill, infection conversion, networking, extraction and a complete match loop are *not* represented here as implemented and validated. There are no multiplayer scalability or performance benchmark claims.
 
-## Videos will follow publication
+## Gameplay video evidence
 
-This is intentionally a **code-first portfolio**. The [gameplay evidence gallery](media/videos/README.md) lists the clips to record and add **after the showcase becomes public**. None are presented as completed footage today.
+This is intentionally a **code-first portfolio**. The [gameplay evidence gallery](media/videos/README.md) lists planned clips that will be added as approved recordings become available. **The showcase is already public.** None are presented as completed footage today.
 
 ## Documentation
 

@@ -2,7 +2,7 @@
 
 [Engineering portfolio](../../README.md) · [Verification matrix](../../docs/verification-matrix.md)
 
-This gallery is intentionally prepared for **adding approved gameplay videos after the repository becomes public**. No video is attached today; the initial public showcase is a code-first engineering portfolio.
+This public gallery is reserved for **approved gameplay recordings from the actual Unity project**. No clips have been added yet; the engineering portfolio is currently code-first, with scenario plans below.
 
 | Evidence | Planned in-engine scenario | Related study | Status |
 | --- | --- | --- | --- |

@@ -10,4 +10,4 @@ Five focused, source-grounded studies connect private-game responsibilities to i
 | [Survivor footsteps](survivor-footsteps.md) | Stance, travel cadence and surface acoustics | [FootstepComposer](../samples/independent-models/FootstepComposer.cs) |
 | [Survivor controller](survivor-controller.md) | Camera-relative movement and crouch policy | [SurvivorControlPolicy](../samples/independent-models/SurvivorControlPolicy.cs) |
 
-Read the [verification matrix](../docs/verification-matrix.md) before treating source descriptions or independent model checks as game runtime evidence. Approved gameplay footage can be added [after publication](../media/videos/README.md).
+Read the [verification matrix](../docs/verification-matrix.md) before treating source descriptions or independent model checks as game runtime evidence. Approved gameplay footage will be linked in the [public evidence gallery](../media/videos/README.md) as recordings become available.

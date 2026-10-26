@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-25 — Public portfolio review
+
+- Confirmed public repository metadata, topics, C# language classification, and active branch ruleset.
+- Reformatted the five independently authored C# examples for clearer professional code review without changing their intended behaviors.
+- Updated gameplay-evidence wording for an already-public repository and retained explicit verification boundaries.
+- Kept raw Unity production scripts, source history, and proprietary assets outside the public tree.
+
 ## 2026-10-25 — Clean Zombie Year showcase foundation
 
 - Established a curated engineering portfolio in a freshly initialized repository; no template or game-project Git history imported.
